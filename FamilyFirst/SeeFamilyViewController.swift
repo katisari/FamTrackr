@@ -13,12 +13,15 @@ import MapKit
 import CoreLocation
 
 
-class SeeFamilyViewController: UIViewController {
+class SeeFamilyViewController: UIViewController, MKMapViewDelegate {
+    
+    var index = 0
     let locationManager = CLLocationManager()
-    
-    
+    let coords = [CLLocation(latitude: 37.3688, longitude: -122.0363),
+        CLLocation(latitude: 37.248658, longitude: -121.8863)
+    ]
+    let people = ["My Son", "My daughter"]
 //    let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
-    var people:[String] = []
     var allColors = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple, UIColor.black]
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -32,7 +35,10 @@ class SeeFamilyViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         mapView.showsUserLocation = true
+        mapView.delegate = self
+        addAnnotations(coords: coords)
         enableBasicLocationServices()
+        
     }
     func enableBasicLocationServices() {
         locationManager.delegate = self
@@ -62,9 +68,36 @@ class SeeFamilyViewController: UIViewController {
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
     }
-
+    func addAnnotations(coords: [CLLocation]){
+        for coord in coords{
+            let CLLCoordType = CLLocationCoordinate2D(latitude: coord.coordinate.latitude,
+                                                      longitude: coord.coordinate.longitude);
+            let anno = MKPointAnnotation();
+            anno.coordinate = CLLCoordType;
+            anno.title = people[index]
+            mapView.addAnnotation(anno);
+            index += 1
+        }
+        
+        
+    }
     
-    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation{
+            return nil;
+        }else{
+            let pinIdent = "Pin";
+            var pinView: MKPinAnnotationView;
+            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: pinIdent) as? MKPinAnnotationView {
+                dequeuedView.annotation = annotation;
+                pinView = dequeuedView;
+            }else{
+                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinIdent);
+                
+            }
+            return pinView;
+        }
+    }
 
 }
 
