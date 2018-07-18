@@ -1,0 +1,8 @@
+version: "Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)"
+options: "ca7b66578c1a2cf336694d303cf38043"
+build_time: [1531888387, 639525000]
+inputs:
+  "/Users/katielee/Desktop/fam_trackr/FamilyFirst/SeeFamilyViewController.swift": [1531888387, 0]
+  "/Users/katielee/Desktop/fam_trackr/FamilyFirst/customCell.swift": [1531877529, 0]
+  "/Users/katielee/Desktop/fam_trackr/FamilyFirst/LoginViewController.swift": [1531877529, 0]
+  "/Users/katielee/Desktop/fam_trackr/FamilyFirst/AppDelegate.swift": [1531877529, 0]
